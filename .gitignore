@@ -1,0 +1,32 @@
+# Node.js (React frontend)
+React/db_management_app/node_modules/
+React/db_management_app/npm-debug.log*
+React/db_management_app/yarn-debug.log*
+React/db_management_app/yarn-error.log*
+React/db_management_app/package-lock.json
+React/db_management_app/yarn.lock
+
+# Python (FastAPI backend)
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.sqlite3
+.env
+env/
+*.egg-info/
+dist/
+build/
+
+# IDEs and editors
+.vscode/
+.idea/
+*.swp
+*.sublime-project
+*.sublime-workspace
+
+# Logs and cache
+*.log
+*.cache
+*.tmp
