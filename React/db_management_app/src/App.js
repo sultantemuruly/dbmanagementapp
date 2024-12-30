@@ -13,13 +13,30 @@ function App() {
   const [refresh, setRefresh] = useState(false)
 
   const fetchTransactions = async () => {
-    const response = await api.get('/transactions')
-    setTransactions(response.data)
+    try {
+      const response = await api.get('/transactions')
+      setTransactions(response.data)
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   const clearTransactions = async () => { 
-    await api.delete('/clear-db');
-    setRefresh((prev) => !prev);
+    try {
+      await api.delete('/clear-db');
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      console.error(error)
+    }
+  };
+
+  const deleteTransaction = async (transaction_id) => { 
+    try {
+      await api.delete(`/delete-record/${transaction_id}`);
+      setRefresh((prev) => !prev);
+    } catch (error) {
+      console.error(error)
+    }
   };
 
   useEffect(() => {
@@ -35,18 +52,22 @@ function App() {
   };
 
   const handleFormSubmit = async (event) => {
-    event.preventDefault();
-    await api.post('/transactions/', formData);
-    fetchTransactions();
-    setFormData(
-      {
-      amount: '',
-      category: '',
-      description: '',
-      is_income: false,
-      date: ''
+    try {
+      event.preventDefault();
+      await api.post('/transactions/', formData);
+      fetchTransactions();
+      setFormData(
+        {
+        amount: '',
+        category: '',
+        description: '',
+        is_income: false,
+        date: ''
+      }
+     );
+    } catch (error) {
+      console.error(error)
     }
-   );
   }
 
   return (
@@ -112,6 +133,7 @@ function App() {
                   <th className="px-4 py-2">Description</th>
                   <th className="px-4 py-2">Has Income</th>
                   <th className="px-4 py-2">Date</th>
+                  <th className="px-4 py-2">Delete Record</th>
                 </tr>
               </thead>
               <tbody>
@@ -122,6 +144,7 @@ function App() {
                     <td className="px-4 py-2">{transaction.description}</td>
                     <td className="px-4 py-2">{transaction.is_income ? 'Yes' : 'No'}</td>
                     <td className="px-4 py-2">{transaction.date}</td>
+                    <td className="px-4 py-2"><button onClick={() => deleteTransaction(transaction.id)} className='bg-red-600 text-white h-[36px] w-[64px] rounded-md text-sm transform transition-transform duration-100 hover:scale-105'>Delete</button></td>
                   </tr>
                 ))}
               </tbody>

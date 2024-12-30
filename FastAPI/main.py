@@ -78,3 +78,25 @@ async def clear_db(db: db_dependency):
         raise HTTPException(
             status_code=500, detail=f"Failed to clear the database: {str(e)}"
         )
+
+
+@app.delete("/delete-record/{id}")
+async def clear_db(id: int, db: db_dependency):
+    try:
+        # Fetch the record by ID
+        transaction = (
+            db.query(models.Transaction).filter(models.Transaction.id == id).first()
+        )
+
+        if not transaction:
+            raise HTTPException(status_code=404, detail="Record not found")
+
+        # Delete the record
+        db.delete(transaction)
+        db.commit()
+
+        return {"message": f"Transaction with ID {transaction} deleted successfully."}
+    except Exception as e:
+        raise HTTPException(
+            status_code=500, detail=f"Failed to delete record: {str(e)}"
+        )
