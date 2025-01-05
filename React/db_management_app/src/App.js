@@ -153,7 +153,7 @@ function App() {
       </div>
 
       <div className='flex justify-center py-5'>
-        <button onClick={clearTransactions} type='submit' className='bg-red-600 text-white h-[45px] w-[164px] rounded-md text-xl transform transition-transform duration-100 hover:scale-105'>Clear</button>
+        <button onClick={clearTransactions} className='bg-red-600 text-white h-[45px] w-[164px] rounded-md text-xl transform transition-transform duration-100 hover:scale-105'>Clear</button>
       </div>
     </div>
   );
